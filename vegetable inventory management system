@@ -1,0 +1,360 @@
+veg = ['tomato','onion','brinjal','drumstick','ladiesfinger','cauliflower','potato','radish','carrot','sweet potato','bitter gaurd','bottle gaurd','garlic','ginger','beans','green peas','cabbage','chilli']
+quantity = [50,50,25,10,50,15,35,40,50,25,30,40,100,100,40,30,30,40]
+cost_price = [20,15,45,50,20,25,25,20,55,45,15,15,90,75,95,45,25,50]
+price = [25,20,50,60,25,30,30,20,60,50,20,20,100,80,100,50,30,60]
+
+password = "1234"
+
+#new list for report - ammina data ni save cheyyadaniki
+#sales report
+sold_items = []
+sold_qty =[]
+bill_amount = []
+
+#customer details
+customer_names = []
+customer_phnumber = []
+
+while True:
+    print("\n")
+    print("1.Owner Section")
+    print("2.User Section")
+    print("3.Exit")
+    
+    ch = input("Enter the choice:")
+    if ch == "1":
+        pwd = input("Enter the password:")
+        if pwd != password:
+            print("Wrong password")
+            continue
+        
+        while True:
+            print("\n")
+            print(" "*10,"OWNER SECTION"," "*10)
+            print(" "*10,"-------------")
+            print("1.Add Items to Inventory")
+            print("2.Remove Items")
+            print("3.Update Items")
+            print("4.View Inventory")
+            print("5.View users details")
+            print("6.View report")
+            print("7.total revenue...Itemized profit")
+            print("8.exit")
+            
+            ch = input("enter the choice:")
+            if ch == "1": #add items to inventory
+
+                new_veg = input("Enter the vegetable name: ").lower()
+
+                if new_veg in veg:
+                    print("Vegetable already exists")
+
+                else:
+                    new_qty = int(input("Enter the quantity: "))
+                    if new_qty <=0:
+                        print("invalid quantity")
+                        continue
+                    new_price = int(input("Enter the price: "))
+                    if new_price <=0:
+                        print("invalid price entered")
+                        continue
+
+                    veg.append(new_veg)
+                    quantity.append(new_qty)
+                    price.append(new_price)
+
+                    print(f"{new_veg} added successfully.")
+        
+            elif ch == "2":#remove item
+                item = input("enter the vegetable name:").lower()
+                if item in veg:
+                    idx = veg.index(item)
+                    veg.pop(idx)
+                    quantity.pop(idx)
+                    price.pop(idx)
+                    print(f"{item} removed successfully")
+                else:
+                    print(item,"is not found")
+                    
+                    
+            elif ch =="3":#update item
+                item = input("Enter vegetable name:").lower()
+                if item in veg:
+                    idx = veg.index(item)
+                    print(f"current qty:{quantity[idx]} kg, current price:{price[idx]}/kg")
+                    choice = input("Update 1.quantity or 2.price")
+                    if choice == "1" :
+                        new_qty = int(input("enter the new quantity:"))
+                        if new_qty <0:
+                            print("invalid quantity")
+                        quantity[idx] = new_qty
+                        print(f"quantity updated to {new_qty}kg")
+                    elif choice == "2":
+                        new_price = int(input("Enter the new price:"))
+                        if new_price <=0:
+                            print("invalid price")
+                        price[idx] = new_price
+                        print(f"price updated to {new_price}/kg")
+                    else:
+                        print("invalid choice")
+                else:
+                    print(item,"is not found")
+            elif ch == "4": #view inventory
+                if len(veg)==0:
+                    print("inventory is empty")
+                else:
+                    print("\n                INVENTORY REPORT")
+                    print("              -------------------  ")
+                    print(f"{'S.No':<5} {'vegetable':<15} {'Qty Available':<15} {'price/kg'}")
+                    print('-'*50)
+                    
+                    total_value = 0
+                    for i in range(len(veg)):
+                        print(f"{i+1:<5} {veg[i]:<20} {quantity[i]:<12} rs.{price[i]}")
+                        total_value +=quantity[i] *price[i]
+                        
+                    print("-"*50)
+                    print(f"                             total items: ",len(veg))
+                    print(f"                       total stock value:",total_value)
+                    print("\n")
+                    
+            
+            elif ch == "5":#view user details
+                if len(customer_names) == 0:
+                    print("No customer records found.")
+                else:
+                    print("\n============CUSTOMER DETAILS ===========")
+                    print("\n")
+                    print(f"{'S.No':<5} {'Name':<20} {'Phone Number'}")
+                    print("-"*40)
+
+                    for i in range(len(customer_names)):
+                        print(f"{i+1:<5} {customer_names[i]:<20} {customer_phnumber[i]}")
+
+                    print("-"*40)
+                    
+                    
+            elif ch =="6": #view report
+                if len(sold_items) == 0:
+                    print("no sales made yet. Report is empty.")
+                else:
+                    print("\n=============== SALES REPORT ================")
+                    print("\n")
+                    print(f"{'S.No':<5} {'Vegetable':<15} {'Qty Sold':<10} {'Amount'}")
+                    print('-'*45)
+                    
+                    for i in range(len(sold_items)):
+                        print(f"{i+1:<5} {sold_items[i]:<15} {sold_qty[i]:<10} {bill_amount[i]}")
+                    
+                    print('-'*45)
+                    print(f"                    total revenue:",sum(bill_amount))                    
+            
+        
+            elif ch == "7":
+
+                if len(sold_items) == 0:
+                    print("No sales made yet.")
+                else:
+                    total_revenue = 0
+                    total_profit = 0
+
+                    report = {}
+
+                    for i in range(len(sold_items)):
+                        item = sold_items[i]
+                        qty = sold_qty[i]
+
+                        idx = veg.index(item)
+
+                        revenue = bill_amount[i]
+                        profit = (price[idx] - cost_price[idx]) * qty
+
+                        if item in report:
+                            report[item][0] += qty
+                            report[item][1] += revenue
+                            report[item][2] += profit
+                        else:
+                            report[item] = [qty, revenue, profit]
+
+                        total_revenue += revenue
+                        total_profit += profit
+
+                    print("\n============ REVENUE & PROFIT REPORT =============")
+                    print("\n")
+                    print(f"{'Vegetable':<15} {'Qty':<8} {'Revenue':<12} {'Profit'}")
+                    print("-"*50)
+
+                    for item, data in report.items():
+                        print(f"{item:<15} {data[0]:<8} {data[1]:<12} {data[2]}")
+
+                    print("-"*50)
+                    print("                    Total Revenue :", total_revenue)
+                    print("                    Total Profit  :", total_profit)
+                        
+            elif ch =="8":
+                break
+            else:
+                print("invalid choice")
+#----------------------------------------------------------------------------------------------------                
+    #User Section...........
+                                                                                                                                  
+    elif ch == "2":
+        #user cart
+        cart_items = []
+        cart_qty = []
+        cart_amount = []
+
+        while True:
+            cust_name = input("Enter your name:").strip()
+            if cust_name.isalpha():
+                break
+            else:
+                print("name must be characters only")
+            
+        while True:
+            cust_phno = input("enter your phone number:")
+            if cust_phno.isdigit() and len(cust_phno)== 10 and cust_phno[0] in "6789":
+                break
+            else:
+                print("invalid phone number.")
+        
+        customer_names.append(cust_name)
+        customer_phnumber.append(cust_phno)        
+        while True:
+            print("\n               USER SECTION")
+            print("              ==============")
+            print("\n")
+            print("1.Add cart")
+            print("2.Remove cart")
+            print("3.Modify cart")
+            print("4.View cart")
+            print("5.billing")
+            print("6.exit")
+            
+            ch = input("Enter choice:").strip()
+            
+            if ch =="1": #Add cart
+                item = input("enter the vegetable name:").lower()
+                if item in veg:
+                    veg_idx = veg.index(item)
+                    print("Available quantity:",quantity[veg_idx],"kgs")
+                    qty = int(input("enter how much do you want:"))
+                    if qty <=0:
+                        print("Invalid quantity")
+                        continue
+                    if qty <= quantity[veg_idx]:
+                        if item in cart_items:
+                            idx = cart_items.index(item)
+                            cart_qty[idx] += qty
+                            cart_amount[idx] = cart_qty[idx] * price[veg_idx]
+                        else:
+                            cart_items.append(item)
+                            cart_qty.append(qty)
+                            cart_amount.append(qty * price[veg_idx])
+                        print(item,"added to cart successfully")
+                    else:
+                        print("only", quantity[veg_idx], "kg available")
+                else:
+                    print("vegetable not found")
+
+                    
+            elif ch =="2": #remove_cart
+                item = input("enter the vegetable name:").lower()
+                if item in cart_items:
+                    idx = cart_items.index(item)
+                    
+                    cart_items.pop(idx)
+                    cart_qty.pop(idx)
+                    cart_amount.pop(idx)
+                    
+                    print(item,"is removed successfully")
+                else:
+                    print(item,"is not found in cart")
+                    
+            elif ch=="3": #modify the cart
+                item = input("enter the vegetable name:").lower()
+                if item in cart_items:
+                    cart_idx = cart_items.index(item)
+                    veg_idx = veg.index(item)
+                    
+                    qty = int(input("enter new quantity:"))
+                    if qty <= 0:
+                        print("Invalid quantity")
+                        continue
+                    if qty <= quantity[veg_idx]:
+                        
+                        cart_qty[cart_idx] = qty
+                        cart_amount[cart_idx] = qty*price[veg_idx]
+                        
+                        print("cart modified successfully")
+                    else:
+                        print("only", quantity[veg_idx] ,"kg available")
+                else:
+                    print(item,"is not found in cart")
+            
+            elif ch == "4":      #View cart
+                if len(cart_items) == 0:
+                    print("cart is empty")
+                else:
+                    print("\n=============== VIEW CART ===============")
+                    print("\n")
+                    print(f"{'S.No':<5} {'vegetable':<15} {'Qty':<10} {'Amount'}")
+                    print("-"*40)
+                    
+                    total = 0
+                    for i in range(len(cart_items)):
+                        print(f"{i+1:<5} {cart_items[i]:<15} {cart_qty[i]:<10} {cart_amount[i]}")
+                        
+                        total +=cart_amount[i]
+                    print("-"*40)
+                    print("                         Total :",total)
+            elif ch =="5": #Billing
+                if len(cart_items) == 0:
+                    print("cart is empty")
+                else:
+                    total_bill = 0
+                    print("="*40)
+                    print("             CUSTOMER BILL")
+                    print("="*40)
+                    print("Customer Name :",cust_name)
+                    print("phone number  :",cust_phno)
+                    print("\n")
+                    print(f"{'vegetable':<15} {'Qty':<10} {'Amount'}")
+                    print("-"*40)
+                    for i in range(len(cart_items)):
+                        veg_idx = veg.index(cart_items[i])
+
+                        if cart_qty[i] <= quantity[veg_idx]:
+                            quantity[veg_idx] -= cart_qty[i]
+                        else:
+                            print(f"{cart_items[i]} has only {quantity[veg_idx]} kg available.")
+                            continue
+
+                        print(f"{cart_items[i]:<15} {cart_qty[i]:<10} Rs.{cart_amount[i]}")
+
+                        total_bill += cart_amount[i]
+
+                        sold_items.append(cart_items[i])
+                        sold_qty.append(cart_qty[i])
+                        bill_amount.append(cart_amount[i])
+                    print("-"*40)
+                    print("                 TOTAL BILL:",total_bill)
+                    print("\n")
+                    print("Thank you visit again")
+                    
+                    cart_items.clear()
+                    cart_qty.clear()
+                    cart_amount.clear()
+                    break
+                    
+            elif ch == "6": 
+                break
+            
+            else:
+                print("invalid choice")
+                
+    elif ch =="3":#final exit
+        print("Thank you...!")
+        break
+    else:
+        print("Invalid choice")
