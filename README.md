@@ -33,13 +33,13 @@ A Python-based, menu-driven Vegetable Inventory Management System developed to s
 
 
 📂 Project Structure
-- Vegetable-Inventory-Management-System
- │── main.py
- │── inventory.txt
- │── users.txt
- │── README.md
-
-
+```text
+Vegetable-Inventory-Management-System/
+├── main.py
+├── inventory.txt
+├── users.txt
+└── README.md
+```
  🚀 How to Run
 - Clone this repository.
 - Open the project folder.
