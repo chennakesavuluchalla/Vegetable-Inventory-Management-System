@@ -3,41 +3,41 @@ A Python-based, menu-driven Vegetable Inventory Management System developed to s
 
 📌 Features
 
-👨‍💼 Owner Module
-Add vegetables to inventory
-Update item details (price, quantity, etc.)
-Remove items from inventory
-View available inventory
-View customer details
-Generate sales reports
-Calculate total revenue and profit
+-👨‍💼 Owner Module
+- Add vegetables to inventory
+- Update item details (price, quantity, etc.)
+- Remove items from inventory
+- View available inventory
+- View customer details
+- Generate sales reports
+- Calculate total revenue and profit
 
 👤 User Module
-Browse available vegetables
-Add items to cart
-Modify cart
-Remove items from cart
-View cart
-Generate billing receipt
+- Browse available vegetables
+- Add items to cart
+- Modify cart
+- Remove items from cart
+- View cart
+- Generate billing receipt
 
-🛠️ Technologies Used
-Python 3
-lists data structure
-Functions
-Loops
-Conditional Statements
-File Handling
-Menu-Driven Programming
+- 🛠️ Technologies Used
+- Python 3
+- lists data structure
+- Functions
+- Loops
+- Conditional Statements
+- File Handling
+- Menu-Driven Programming
 
-📂 Project Structure
-Vegetable-Inventory-Management-System/
-│── main.py
-│── inventory.txt
-│── users.txt
-│── README.md
+- 📂 Project Structure
+- Vegetable-Inventory-Management-System/
+- │── main.py
+- │── inventory.txt
+- │── users.txt
+- │── README.md
 
-🚀 How to Run
-Clone this repository.
-Open the project folder.
-Run the program using:
-python main.py
+- 🚀 How to Run
+- Clone this repository.
+- Open the project folder.
+- Run the program using:
+- python main.py
